@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Integration Framework for School Districts — Condensed Matrix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --black-teal:#091d20;
+  --dark-teal:#093c44;
+  --teal:#115e6e;
+  --mid-teal:#2f8d98;
+  --light-teal:#C7DEE0;
+  --pale-blue:#f3fafc;
+  --green:#b5cd34;
+  --orange:#f7941e;
+  --sand:#e4b782;
+  --cream:#fff4e7;
+  --dark-gray:#414042;
+  --light-gray:#6d6e71;
+  --white:#ffffff;
+  --page-bg:#e8eff0;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --page-bg:#0c1618; }
+}
+:root[data-theme="dark"]{ --page-bg:#0c1618; }
+
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--page-bg);
+  font-family:"Figtree","Poppins","Segoe UI",system-ui,sans-serif;
+  color:var(--black-teal);
+  padding:16px;
+}
+
+/* ---------- SHEET ---------- */
+.sheet{
+  background:var(--white);
+  color:var(--black-teal);
+  width:100%;
+  max-width:1600px;
+  margin:0 auto;
+  padding:26px 28px 20px;
+  box-shadow:0 2px 24px rgba(9,29,32,.18);
+  overflow-x:auto;
+}
+
+/* ---------- MASTHEAD ---------- */
+.masthead{
+  display:flex;flex-wrap:wrap;gap:18px;
+  align-items:flex-end;justify-content:space-between;
+  border-bottom:4px solid var(--green);
+  padding-bottom:12px;margin-bottom:4px;
+}
+.mh-left{min-width:min(100%,460px);flex:1 1 460px}
+.org{
+  font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mid-teal);margin-bottom:4px;
+}
+h1{
+  font-size:clamp(20px,2.1vw,30px);line-height:1.08;font-weight:800;
+  color:var(--dark-teal);margin:0 0 6px;letter-spacing:-.01em;
+}
+.deck{
+  font-size:12px;line-height:1.45;color:var(--teal);font-weight:500;
+  max-width:70ch;margin:0;
+}
+.mh-right{text-align:right;font-size:10px;line-height:1.6;color:var(--light-gray);flex:0 0 auto}
+.stamp{
+  display:inline-block;background:var(--dark-teal);color:var(--white);
+  font-size:9.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
+  padding:4px 9px;margin-bottom:6px;
+}
+.mh-right em{font-style:normal;color:var(--teal);font-weight:700}
+
+/* ---------- GRID SHELL ---------- */
+.grid{
+  display:grid;
+  grid-template-columns:150px repeat(6,1fr);
+  min-width:1180px;
+  border-left:1px solid var(--light-teal);
+  border-top:1px solid var(--light-teal);
+}
+.grid > *{
+  border-right:1px solid var(--light-teal);
+  border-bottom:1px solid var(--light-teal);
+  padding:7px 9px;
+}
+
+/* ---------- BAND ROW ---------- */
+.band{
+  font-size:8.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--white);background:var(--teal);padding:5px 9px;
+}
+.band.spacer{background:var(--dark-teal)}
+.band.discovery{background:var(--mid-teal)}
+.band.science{background:var(--dark-teal)}
+.band.horizon{background:var(--sand);color:var(--black-teal)}
+.band span{font-weight:500;letter-spacing:.02em;text-transform:none;opacity:.9}
+
+/* ---------- COLUMN HEADERS ---------- */
+.colhead{background:var(--pale-blue);display:flex;flex-direction:column;gap:4px}
+.colhead .tag{
+  font-size:8px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--mid-teal);
+}
+.colhead .tag .new{color:var(--orange)}
+.colhead h2{
+  font-size:15px;font-weight:800;color:var(--dark-teal);margin:0;line-height:1.1;letter-spacing:-.01em;
+}
+.colhead .sub{font-size:10px;line-height:1.35;color:var(--teal);font-weight:600;margin:0}
+.colhead .gate{
+  font-size:8.5px;line-height:1.38;color:var(--dark-gray);margin:2px 0 0;
+  border-top:1px dotted var(--light-teal);padding-top:4px;
+}
+.colhead .gate b{color:var(--dark-teal);font-weight:800;letter-spacing:.05em}
+
+/* how-to-read cell */
+.howto{background:var(--dark-teal);color:var(--white);display:flex;flex-direction:column;justify-content:center;gap:4px}
+.howto strong{font-size:11px;font-weight:800;line-height:1.2;display:block}
+.howto span{font-size:8.5px;line-height:1.4;color:var(--light-teal)}
+
+/* ---------- DOMAIN LABEL ---------- */
+.domain{background:var(--pale-blue);display:flex;flex-direction:column;gap:3px}
+.domain .num{
+  font-size:16px;font-weight:800;color:var(--mid-teal);line-height:1;letter-spacing:-.02em;
+}
+.domain h3{font-size:11.5px;font-weight:800;color:var(--dark-teal);margin:0;line-height:1.16}
+.domain .driver{
+  font-size:7.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-top:2px;
+}
+.domain .driver .new{color:var(--orange)}
+.domain .lineage{font-size:7.5px;line-height:1.3;color:var(--light-gray);font-style:italic}
+
+/* ---------- BODY CELLS ---------- */
+.cell{display:flex;flex-direction:column;gap:5px;position:relative}
+.cell p{
+  font-size:11.5px;line-height:1.3;font-weight:600;color:var(--black-teal);margin:0;
+}
+.cell .look{
+  font-size:8.5px;line-height:1.3;color:var(--light-gray);margin:0;
+  border-top:1px solid var(--pale-blue);padding-top:4px;
+}
+.cell .look b{color:var(--teal);font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:7.5px}
+.cell.stage0{background:#fbfdfd}
+.cell.horizon{background:var(--cream)}
+.cell.horizon p{color:var(--dark-gray);font-style:italic}
+.cell.empty{background:#fafcfc}
+.cell.empty::after{
+  content:"—";color:var(--light-teal);font-size:14px;font-weight:700;
+}
+
+/* 2023 provenance badge */
+.c23{
+  position:absolute;top:5px;right:6px;
+  font-size:6.5px;font-weight:800;letter-spacing:.06em;
+  color:var(--dark-teal);background:var(--light-teal);
+  padding:1.5px 4px;border-radius:2px;line-height:1;
+}
+.cell p{padding-right:26px}
+.cell:not(:has(.c23)) p{padding-right:0}
+
+/* ---------- FOOTER ---------- */
+.footnotes{
+  margin-top:10px;padding-top:8px;border-top:1px solid var(--light-teal);
+  display:flex;flex-wrap:wrap;gap:14px;
+  font-size:8.5px;line-height:1.45;color:var(--light-gray);
+}
+.footnotes div{flex:1 1 260px}
+.footnotes b{color:var(--teal);font-weight:800}
+.colophon{
+  margin-top:8px;padding-top:6px;border-top:1px solid var(--light-teal);
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;
+  font-size:8px;color:var(--light-gray);font-style:italic;
+}
+.colophon a{color:var(--orange);text-decoration:none;font-style:normal;font-weight:700}
+
+/* ---------- PRINT: TABLOID LANDSCAPE ---------- */
+@page{size:17in 11in;margin:.32in}
+@media print{
+  body{background:var(--white);padding:0}
+  .sheet{box-shadow:none;max-width:none;padding:0;overflow:visible}
+  .grid{min-width:0}
+  .grid > *{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="mh-left">
+      <div class="org">Michigan Virtual · Learning &amp; Research Institute · AI Lab</div>
+      <h1>AI Integration Framework for School Districts</h1>
+      <p class="deck">Extends, does not replace, the July 2023 framework. <em>Investigating</em> opens into Surfacing and Exploration, <em>Implementing</em> splits into the three NIRN implementation stages, and <em>Innovating</em> stays on the horizon — outside the stages, optional by domain.</p>
+    </div>
+    <div class="mh-right">
+      <div class="stamp">Draft for review · September 2026</div><br>
+      <em>Condensed reference</em><br>
+      11 domains × 6 columns · NIRN-aligned<br>
+      michiganvirtual.org/ai
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- BAND ROW -->
+    <div class="band spacer">The eleven domains</div>
+    <div class="band discovery" style="grid-column:span 2">Design &amp; discovery · <span>best practice is not yet known, so iterate here</span></div>
+    <div class="band science" style="grid-column:span 3">Implementation science · <span>NIRN active implementation stages, each with a gate</span></div>
+    <div class="band horizon">Undiscovered · <span>returns to discovery</span></div>
+
+    <!-- COLUMN HEADERS -->
+    <div class="howto">
+      <strong>Read across one row.</strong>
+      <span>That is the domain's chute, from where you are to where it goes next. Districts are almost never in the same column in every chute. A jagged profile is the honest one.</span>
+    </div>
+
+    <div class="colhead">
+      <div class="tag">Stage 0 · <span class="new">New</span></div>
+      <h2>Surfacing</h2>
+      <p class="sub">See what is already happening, without blame.</p>
+      <p class="gate"><b>MOVE ON WHEN:</b> someone in authority has named the reality out loud and owns the next decision.</p>
+    </div>
+
+    <div class="colhead">
+      <div class="tag">NIRN Stage 1</div>
+      <h2>Exploration</h2>
+      <p class="sub">Decide whether — and what — before deciding how.</p>
+      <p class="gate"><b>MOVE ON WHEN:</b> a written go / no-go / not-yet decision, a named team with authority, committed time and budget.</p>
+    </div>
+
+    <div class="colhead">
+      <div class="tag">NIRN Stage 2 · <span class="new">New</span></div>
+      <h2>Installation</h2>
+      <p class="sub">Build everything the first day of use will depend on.</p>
+      <p class="gate"><b>MOVE ON WHEN:</b> policy adopted, contracts signed, pilot staff trained, supports scheduled. Miss one and you are still installing.</p>
+    </div>
+
+    <div class="colhead">
+      <div class="tag">NIRN Stage 3</div>
+      <h2>Initial Implementation</h2>
+      <p class="sub">First real use. Expect the dip; support through it.</p>
+      <p class="gate"><b>MOVE ON WHEN:</b> evidence it works in your context, refined procedures, a scaling plan with named supports.</p>
+    </div>
+
+    <div class="colhead">
+      <div class="tag">NIRN Stage 4</div>
+      <h2>Full Implementation</h2>
+      <p class="sub">Ordinary, monitored, sustained — and scheduled for renewal.</p>
+      <p class="gate"><b>RENEWAL:</b> a new statute, federal action, capability shift, or 12 months reopens the affected chutes.</p>
+    </div>
+
+    <div class="colhead">
+      <div class="tag">Horizon · from 2023</div>
+      <h2>Innovation</h2>
+      <p class="sub">Aspirational. Nobody has figured this out yet.</p>
+      <p class="gate"><b>NO GATE.</b> Not a stage and not a reward for finishing. Several domains have no innovation state, and that is the honest answer.</p>
+    </div>
+
+    <!-- 01 -->
+    <div class="domain">
+      <div class="num">01</div>
+      <h3>Leadership, Vision &amp; Governance</h3>
+      <div class="driver">Leadership driver</div>
+      <div class="lineage">2023: Leadership &amp; Vision</div>
+    </div>
+    <div class="cell stage0"><p>AI in use; no district position</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Charter a cross-role task force</p><p class="look"><b>Look for</b> Charter with student/family seats; go/no-go memo</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Named team with authority, time, budget</p><p class="look"><b>Look for</b> Board minutes; named lead, FTE time</p></div>
+    <div class="cell"><p>Leaders clear barriers and model use</p><p class="look"><b>Look for</b> Barrier log with resolution dates</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Governance survives turnover; renews annually</p><p class="look"><b>Look for</b> Renewal review on board calendar</p></div>
+    <div class="cell horizon"><p>No AI plan; district shapes terms</p></div>
+
+    <!-- 02 -->
+    <div class="domain">
+      <div class="num">02</div>
+      <h3>Policy, Legal &amp; Responsible Use</h3>
+      <div class="driver">Leadership driver</div>
+      <div class="lineage">2023: Policy, Ethical &amp; Legal Considerations</div>
+    </div>
+    <div class="cell stage0"><p>Policy predates AI; staff improvise</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Legal review: FERPA, COPPA, state action</p><p class="look"><b>Look for</b> Policy gap analysis; state-guidance crosswalk</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Board adopts policy and tool process</p><p class="look"><b>Look for</b> Adopted policy; tool-approval workflow live</p></div>
+    <div class="cell"><p>Real cases test the documented procedure</p><p class="look"><b>Look for</b> Incident log; first revision adopted</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Annual review; everyone knows the norms</p><p class="look"><b>Look for</b> Compliance audit; norm-awareness data</p></div>
+    <div class="cell empty"></div>
+
+    <!-- 03 -->
+    <div class="domain">
+      <div class="num">03</div>
+      <h3>Data Privacy, Security &amp; Vendor Management</h3>
+      <div class="driver">Organization driver · <span class="new">New domain</span></div>
+      <div class="lineage">2023: buried inside Policy</div>
+    </div>
+    <div class="cell stage0"><p>Embedded AI and shadow use unmapped</p></div>
+    <div class="cell"><p>Inventory every path district data takes</p><p class="look"><b>Look for</b> Data-flow inventory; shadow-use survey</p></div>
+    <div class="cell"><p>DPAs signed; breach response rehearsed</p><p class="look"><b>Look for</b> Signed DPAs; tabletop exercise complete</p></div>
+    <div class="cell"><p>Approved list public; requests triaged openly</p><p class="look"><b>Look for</b> Public tool list; SLA met</p></div>
+    <div class="cell"><p>Annual re-vetting; tools renegotiated or sunset</p><p class="look"><b>Look for</b> Re-vetting record; documented tool sunsets</p></div>
+    <div class="cell empty"></div>
+
+    <!-- 04 -->
+    <div class="domain">
+      <div class="num">04</div>
+      <h3>Instruction &amp; Learning Design</h3>
+      <div class="driver">Competency driver</div>
+      <div class="lineage">2023: Instructional Framework</div>
+    </div>
+    <div class="cell stage0"><span class="c23">2023</span><p>Teacher productivity use, no shared direction</p></div>
+    <div class="cell"><p>Test against existing instructional priorities</p><p class="look"><b>Look for</b> Use-case shortlist tied to instructional framework</p></div>
+    <div class="cell"><p>Pilot cohort, exemplars, coaches before students</p><p class="look"><b>Look for</b> Pilot roster with rationale; exemplar lessons</p></div>
+    <div class="cell"><span class="c23">2023</span><p>First classroom use; coaching runs alongside</p><p class="look"><b>Look for</b> Coaching logs; fidelity walkthrough data</p></div>
+    <div class="cell"><p>Scaled district-wide; deliberate absence documented</p><p class="look"><b>Look for</b> “Where we don't use AI” guidance</p></div>
+    <div class="cell horizon"><span class="c23">2023</span><p>Learner-owned competency model, intelligent tutoring</p></div>
+
+    <!-- 05 -->
+    <div class="domain">
+      <div class="num">05</div>
+      <h3>Assessment &amp; Academic Integrity</h3>
+      <div class="driver">Competency driver</div>
+      <div class="lineage">2023: Learning Assessments</div>
+    </div>
+    <div class="cell stage0"><p>Suspect work handled quietly and inconsistently</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Explore formative use; detectors don't hold</p><p class="look"><b>Look for</b> Integrity baseline; detector-limitations brief</p></div>
+    <div class="cell"><p>Integrity code rewritten around disclosure evidence</p><p class="look"><b>Look for</b> Revised code; assignment-level AI-use labels</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Redesigned tasks run; cases get process</p><p class="look"><b>Look for</b> Case data with due-process record</p></div>
+    <div class="cell"><p>Process valued; validity and equity checked</p><p class="look"><b>Look for</b> Equity disaggregation of outcomes</p></div>
+    <div class="cell horizon"><span class="c23">2023</span><p>Continuous evidence, not a single event</p></div>
+
+    <!-- 06 -->
+    <div class="domain">
+      <div class="num">06</div>
+      <h3>AI Literacy: Students, Staff &amp; Families</h3>
+      <div class="driver">Competency driver · <span class="new">New domain</span></div>
+      <div class="lineage">2023: no curricular row existed</div>
+    </div>
+    <div class="cell stage0"><p>Learned peer to peer; vocabulary absent</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Map curriculum; baseline what people know</p><p class="look"><b>Look for</b> Curriculum map; baseline literacy survey</p></div>
+    <div class="cell"><p>K–12 scope and sequence adopted</p><p class="look"><b>Look for</b> Adopted scope and sequence; teacher toolkit</p></div>
+    <div class="cell"><p>First units taught; misconceptions fed back</p><p class="look"><b>Look for</b> Taught-unit tracker; family session feedback</p></div>
+    <div class="cell"><p>Every graduate competent; literacy in induction</p><p class="look"><b>Look for</b> Competency attainment data</p></div>
+    <div class="cell horizon"><p>Learning with agents, not about them</p></div>
+
+    <!-- 07 -->
+    <div class="domain">
+      <div class="num">07</div>
+      <h3>Professional Learning &amp; Coaching</h3>
+      <div class="driver">Competency driver</div>
+      <div class="lineage">2023: Professional Learning</div>
+    </div>
+    <div class="cell stage0"><span class="c23">2023</span><p>Training sought on their own time</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Assess readiness, trust, internal coaching capacity</p><p class="look"><b>Look for</b> Needs and trust survey; capacity inventory</p></div>
+    <div class="cell"><p>Role-specific sequences; coaches trained first</p><p class="look"><b>Look for</b> Differentiated PL plan; trained coach cadre</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Job-embedded coaching alongside first use</p><p class="look"><b>Look for</b> Coaching data; PL revised from it</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Practice change, not seat time</p><p class="look"><b>Look for</b> Practice-change evidence; staff-led PL</p></div>
+    <div class="cell horizon"><span class="c23">2023</span><p>PD generated from this week's teaching</p></div>
+
+    <!-- 08 -->
+    <div class="domain">
+      <div class="num">08</div>
+      <h3>Student Use, Voice &amp; Wellbeing</h3>
+      <div class="driver">Competency driver</div>
+      <div class="lineage">2023: Student Use</div>
+    </div>
+    <div class="cell stage0"><p>Heaviest users, least consulted so far</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Listening panels; audit gates and wellbeing</p><p class="look"><b>Look for</b> Student listening data; wellbeing risk brief</p></div>
+    <div class="cell"><p>Access by grade band; student advisory</p><p class="look"><b>Look for</b> Access matrix; counselor AI-harm protocol</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Use across classes; report channels trusted</p><p class="look"><b>Look for</b> Documented student-driven changes</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Documented proficiency; wellbeing holding steady</p><p class="look"><b>Look for</b> Proficiency portfolios; wellbeing trends</p></div>
+    <div class="cell empty"></div>
+
+    <!-- 09 -->
+    <div class="domain">
+      <div class="num">09</div>
+      <h3>Family &amp; Community Partnership</h3>
+      <div class="driver">Organization driver</div>
+      <div class="lineage">2023: Outreach</div>
+    </div>
+    <div class="cell stage0"><span class="c23">2023</span><p>Families hear it from their kids</p></div>
+    <div class="cell"><p>Multilingual listening; scan community assets</p><p class="look"><b>Look for</b> Findings published in family languages</p></div>
+    <div class="cell"><p>Family advisory seated; opt-out workflow built</p><p class="look"><b>Look for</b> Advisory seated; opt-out workflow live</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Transparency pages name every tool</p><p class="look"><b>Look for</b> Per-tool transparency pages; public Q&amp;A</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Families hold seats in renewal decisions</p><p class="look"><b>Look for</b> Co-governance seats; trust survey trends</p></div>
+    <div class="cell empty"></div>
+
+    <!-- 10 -->
+    <div class="domain">
+      <div class="num">10</div>
+      <h3>Operations &amp; Infrastructure</h3>
+      <div class="driver">Organization driver</div>
+      <div class="lineage">2023: Business &amp; Technology Operations</div>
+    </div>
+    <div class="cell stage0"><p>Features already switched on, untracked</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Scope automation and multi-year cost</p><p class="look"><b>Look for</b> Readiness audit; multi-year TCO model</p></div>
+    <div class="cell"><p>Provisioning, rostering, helpdesk ready beforehand</p><p class="look"><b>Look for</b> Workflow maps with human-in-the-loop points</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Workflows live with human oversight</p><p class="look"><b>Look for</b> Oversight logs; efficiency and error metrics</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Automated only where accuracy holds</p><p class="look"><b>Look for</b> “Human decision required” registry</p></div>
+    <div class="cell horizon"><p>Bounded authority, not step-by-step approval</p></div>
+
+    <!-- 11 -->
+    <div class="domain">
+      <div class="num">11</div>
+      <h3>Evaluation &amp; Continuous Improvement</h3>
+      <div class="driver">Organization driver · <span class="new">New domain</span></div>
+      <div class="lineage">2023: no evaluation function existed</div>
+    </div>
+    <div class="cell stage0"><p>No one defined what improves</p></div>
+    <div class="cell"><p>Theory of action with baselines captured</p><p class="look"><b>Look for</b> Written theory of action; baseline data</p></div>
+    <div class="cell"><p>Instrument data; plan equity disaggregation</p><p class="look"><b>Look for</b> Dashboards tested; equity disaggregation plan</p></div>
+    <div class="cell"><p>Rapid cycles; stop decisions actually honored</p><p class="look"><b>Look for</b> PDSA records; one documented stop decision</p></div>
+    <div class="cell"><span class="c23">2023</span><p>Annual public report feeds re-exploration</p><p class="look"><b>Look for</b> Public report; framework changelog</p></div>
+    <div class="cell empty"></div>
+
+  </div>
+
+  <div class="footnotes">
+    <div><b>2023 badge.</b> The cell descends from approved July 2023 framework language, placed in the column that actually describes it. The approved wording itself lives in the full-depth companion sheet.</div>
+    <div><b>Empty cells are deliberate.</b> Where a domain's goal is durable discipline rather than an undiscovered future, no innovation state is claimed. Nothing was invented to fill a box.</div>
+    <div><b>NIRN drivers.</b> Leadership (match style to problem) · Organization (systems that make good practice easy) · Competency (selection, training, coaching, fidelity).</div>
+    <div><b>This is the at-a-glance sheet.</b> Every cell is six words or fewer. Column gates and driver tags carry the detail the cells no longer do.</div>
+  </div>
+
+  <div class="colophon">
+    <span>A publication of the AI Lab at the Michigan Virtual Learning &amp; Research Institute · Lansing, Michigan</span>
+    <span>Draft for internal review · condensed companion to the full-depth tabloid reference · <a href="https://michiganvirtual.org/ai">michiganvirtual.org/ai</a></span>
+  </div>
+
+</div>
+</body>
+</html>
